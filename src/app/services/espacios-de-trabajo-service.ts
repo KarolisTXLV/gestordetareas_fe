@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { MostrarEspaciosDeTrabajo } from '../models/mostrar-espacios-de-trabajo';
 import { CrearNuevoEspacioDeTrabajo } from '../models/crear-nuevo-espacio-de-trabajo';
@@ -17,6 +17,11 @@ obtenerEspaciosDeTrabajo() {
 
 crearEspacioDeTrabajo(dto: CrearNuevoEspacioDeTrabajo){
   return this.http.post(`${this.baseUrl}/EspaciosDeTrabajo/CrearNuevoEspacioDeTrabajo`, dto);
+}
+
+eliminarEspacioDeTrabajo(idEspacioDeTrabajo: number){
+  const params = new HttpParams().set('idEspacioDeTrabajo', idEspacioDeTrabajo);
+  return this.http.post(`${this.baseUrl}/EspaciosDeTrabajo/Eliminar`, null, { params });
 }
 
 }

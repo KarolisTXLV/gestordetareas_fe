@@ -51,20 +51,29 @@
       @for (espacio of espaciosDeTrabajo(); track espacio.idEspacioDeTrabajo) {
         <button
           (click)="seleccionarEspacio(espacio.idEspacioDeTrabajo)"
-          class="flex items-center gap-4 w-full text-left bg-amber-900/30 border border-amber-400/10 hover:border-amber-400/30 hover:bg-amber-900/50 rounded-xl px-4 py-3.5 transition-all duration-200 group"
+          class="flex items-center justify-between w-full text-left bg-amber-900/30 border border-amber-400/10 hover:border-amber-400/30 hover:bg-amber-900/50 rounded-xl px-4 py-3.5 transition-all duration-200 group"
         >
-          <div class="flex-1 min-w-0">
-            <p class="text-sm font-medium text-amber-200">{{ espacio.nombreEspacioTrabajo }}</p>
+          <div class="flex items-center gap-3 min-w-0">
+            <svg
+              class="w-4 h-4 text-amber-400/25 group-hover:text-amber-400/50 transition-all shrink-0"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+            <p class="text-sm font-medium text-amber-200 truncate">
+              {{ espacio.nombreEspacioTrabajo }}
+            </p>
           </div>
-          <svg
-            class="w-4 h-4 text-amber-400/25 group-hover:text-amber-400/50 transition-all shrink-0"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            viewBox="0 0 24 24"
+          <button
+            (click)="$event.stopPropagation(); onEliminar(espacio.idEspacioDeTrabajo)"
+            [disabled]="cargando"
+            class="shrink-0 px-3 py-1.5 text-xs bg-red-500/20 hover:bg-red-500/30 text-red-400 font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-          </svg>
+            Eliminar
+          </button>
         </button>
       }
     </div>

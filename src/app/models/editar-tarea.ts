@@ -1,4 +1,5 @@
 export interface EditarTarea {
     nombreTarea: string,
-    descripcionTarea: string
+    descripcionTarea: string,
+    estadosTarea: number
 }

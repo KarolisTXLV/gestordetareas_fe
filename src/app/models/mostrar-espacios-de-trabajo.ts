@@ -1,5 +1,6 @@
 export interface MostrarEspaciosDeTrabajo {
     idEspacioDeTrabajo: number,
-    nombreEspacioTrabajo: string
+    nombreEspacioTrabajo: string,
+    estaEliminado: boolean
 
 }

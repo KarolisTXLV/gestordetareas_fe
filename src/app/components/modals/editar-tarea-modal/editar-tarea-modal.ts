@@ -20,6 +20,7 @@ export class EditarTareaModal implements OnInit {
 
   nombreTarea = '';
   descripcionTarea = '';
+  estadosTarea = 0;
   cargando = false;
   error = '';
 
@@ -51,6 +52,7 @@ export class EditarTareaModal implements OnInit {
     const dto: EditarTarea = {
       nombreTarea: this.nombreTarea.trim(),
       descripcionTarea: this.descripcionTarea.trim(),
+      estadosTarea:this.estadosTarea
     };
 
     this.tareaService.EditarTarea(dto, this.tarea.idTarea).subscribe({

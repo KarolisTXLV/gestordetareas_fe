@@ -30,13 +30,22 @@
   <p class="text-xs mt-1.5 font-mono text-amber-400/80 leading-relaxed line-clamp-3">
     {{ tarea().descripcionTarea }}
   </p>
+  <select
+    [(ngModel)]="estadosTarea"
+    (ngModelChange)="onCambiarEstado()"
+    class="appearance-none bg-amber-950/60 text-amber-300 border border-amber-700/40 hover:border-amber-500/60 hover:bg-amber-900/60 rounded-xl pl-3 pr-8 py-1.5 text-xs font-medium cursor-pointer outline-none transition-all duration-200 focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/20"
+  >
+    <option class="bg-amber-950 text-amber-200" [value]="0">⩒ Todo</option>
+    <option class="bg-amber-950 text-amber-200" [value]="1">⩒ Empezar</option>
+    <option class="bg-amber-950 text-amber-200" [value]="3">⩒ Terminar</option>
+  </select>
 </div>
 
 @if (modalEditarAbierto()) {
-<app-editar-tarea-modal
-  [tarea]="tarea()"
-  (cerrar)="cerrarModalEditar()"
-  (tareaEditada)="onTareaEditada()"
-  (tareaEliminada)="onTareaEliminada()"
-/>
+  <app-editar-tarea-modal
+    [tarea]="tarea()"
+    (cerrar)="cerrarModalEditar()"
+    (tareaEditada)="onTareaEditada()"
+    (tareaEliminada)="onTareaEliminada()"
+  />
 }
