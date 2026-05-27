@@ -1,23 +1,27 @@
 <div
-  class="bg-linear-to-r from-amber-700 to-amber-950 w-full sm:w-80 p-5 h-60 shadow-md relative rounded-xl overflow-hidden mb-4"
+  class="bg-linear-to-r from-amber-700 to-amber-950 w-full p-5 h-60 shadow-md relative rounded-xl overflow-hidden mb-4"
 >
-  <div class="absolute top-4 right-4 flex gap-1">
-    @if (!tarea().tienePrioridad) {
-      <button
-        (click)="modalPriorizarAbierto.set(true)"
-        class="bg-red-500/20 text-red-300 border border-red-500/30 rounded-xl px-3 py-1 text-xs font-medium"
-      >
-        ⚑ Priorizar
-      </button>
-    }
-    @if (tarea().tienePrioridad) {
-      <div
-        class=" flex items-center gap-1 text-red-300 text-xs font-medium"
-      >
-        <span>Fecha limite tarea urgente: </span>
-        <span>{{ tarea().fechaLimite | date: 'dd/MM/yyyy' }}</span>
-      </div>
-    }
+  <div class="absolute top-4 left-4 right-4 flex justify-between items-center">
+    <div>
+      @if (!tarea().tienePrioridad) {
+        <button
+          (click)="modalPriorizarAbierto.set(true)"
+          class="bg-red-500/20 text-red-300 border border-red-500/30 rounded-xl px-3 py-1 text-xs font-medium"
+        >
+          ⚑ Priorizar
+        </button>
+      }
+      @if (tarea().tienePrioridad) {
+        <div
+          class="flex items-center gap-1 bg-red-500/20 border border-red-500/30 rounded-xl px-3 py-1"
+        >
+          <span class="text-red-300 text-xs">⚑</span>
+          <span class="text-red-300 text-xs font-medium">{{
+            tarea().fechaLimite | date: 'dd/MM/yyyy'
+          }}</span>
+        </div>
+      }
+    </div>
     <button
       (click)="modalEditarAbierto.set(true)"
       class="bg-orange-400/20 text-orange-300 border border-orange-400/30 rounded-xl px-3 py-1 text-xs font-medium"
@@ -26,12 +30,11 @@
     </button>
   </div>
   <div class="mt-10">
-  <p class="text-base font-semibold text-amber-200">{{ tarea().nombreTarea }}</p>
-  <p class="text-xs mt-1.5 font-mono text-amber-400/80 leading-relaxed line-clamp-2">
-    {{ tarea().descripcionTarea }}
-  </p>
+    <p class="text-base font-semibold text-amber-200">{{ tarea().nombreTarea }}</p>
+    <p class="text-xs mt-1.5 font-mono text-amber-400/80 leading-relaxed line-clamp-2">
+      {{ tarea().descripcionTarea }}
+    </p>
   </div>
-
 
   <select
     [ngModel]="tarea().estadosTarea"

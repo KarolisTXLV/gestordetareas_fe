@@ -1,0 +1,75 @@
+<div
+  class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+  (click)="onOverlayClick($event)"
+>
+  <div
+    class="bg-zinc-900 border border-zinc-700 rounded-xl w-full max-w-md mx-4 p-6 shadow-xl"
+    (click)="$event.stopPropagation()"
+  >
+    <div class="flex items-center justify-between mb-5">
+      <h2 class="text-white font-semibold">Buscar amigo</h2>
+      <button (click)="cerrar.emit()" class="text-zinc-400 hover:text-white transition-colors">
+        ✕
+      </button>
+    </div>
+
+    <div class="flex flex-col gap-4">
+      <div class="flex flex-col gap-1">
+        <label class="text-zinc-400 text-sm">FriendTag <span class="text-amber-400">*</span></label>
+        <input
+          [(ngModel)]="friendTag"
+          type="text"
+          placeholder="FriendTag del amigo"
+          class="bg-zinc-800 border border-zinc-700 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500 placeholder:text-zinc-500"
+        />
+      </div>
+
+      @if (nombreAmigo()) {
+        <div
+          class="flex items-center gap-3 bg-amber-500/10 border border-amber-500/20 rounded-lg px-4 py-3"
+        >
+          <div
+            class="size-8 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-300 text-sm font-semibold shrink-0"
+          >
+            {{ nombreAmigo()[0].toUpperCase() }}
+          </div>
+          <div>
+            <p class="text-white text-sm font-medium">{{ nombreAmigo() }}</p>
+            <p class="text-zinc-400 text-xs">Usuario encontrado</p>
+          </div>
+        </div>
+      }
+
+      @if (error) {
+        <p class="text-red-400 text-xs">{{ error }}</p>
+      }
+
+      <div class="flex justify-end gap-2 mt-1">
+        <button
+          (click)="cerrar.emit()"
+          class="px-4 py-2 text-sm text-zinc-400 hover:text-white transition-colors"
+        >
+          Cancelar
+        </button>
+        @if (nombreAmigo()) {
+          <button
+            (click)="onAnadirAmigo()"
+            [disabled]="cargando"
+            class="px-4 py-2 text-sm bg-amber-500 hover:bg-amber-400 text-black font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {{ cargando ? 'Añadiendo...' : 'Añadir amigo' }}
+          </button>
+        }
+        @if (!nombreAmigo()) {
+          <button
+            (click)="onSubmit()"
+            [disabled]="cargando"
+            class="px-4 py-2 text-sm bg-amber-500 hover:bg-amber-400 text-black font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {{ cargando ? 'Buscando...' : 'Buscar amigo' }}
+          </button>
+        }
+      </div>
+    </div>
+  </div>
+</div>
