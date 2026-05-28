@@ -15,18 +15,12 @@ export class PanelEspaciosTrabajo implements OnInit {
   idEspacioSeleccionado = signal<number | null>(null);
   private espaciosDeTrabajoService = inject(EspaciosDeTrabajoService);
   private router = inject(Router);
-  espaciosDeTrabajo = signal<MostrarEspaciosDeTrabajo[]>([]);
   nombreEspacioTrabajo = '';
+  espaciosDeTrabajo = this.espaciosDeTrabajoService.espaciosDeTrabajo;
   cargando = false;
 
   ngOnInit() {
-    this.cargarEspacios();
-  }
-
-  cargarEspacios() {
-    this.espaciosDeTrabajoService
-      .obtenerEspaciosDeTrabajo()
-      .subscribe((data) => this.espaciosDeTrabajo.set(data));
+    this.espaciosDeTrabajoService.cargarEspacios(false);
   }
 
   seleccionarEspacio(id: number) {
@@ -42,7 +36,7 @@ export class PanelEspaciosTrabajo implements OnInit {
     this.espaciosDeTrabajoService.crearEspacioDeTrabajo(dto).subscribe({
       next: () => {
         this.nombreEspacioTrabajo = '';
-        this.cargarEspacios();
+        this.espaciosDeTrabajoService.cargarEspacios(true);
       },
     });
   }
@@ -51,7 +45,7 @@ export class PanelEspaciosTrabajo implements OnInit {
     if (id === null) return;
     this.espaciosDeTrabajoService.eliminarEspacioDeTrabajo(id).subscribe(() => {
       this.cargando = false;
-      this.cargarEspacios();
+      this.espaciosDeTrabajoService.cargarEspacios(true);
     });
   }
 }

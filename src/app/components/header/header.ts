@@ -8,6 +8,7 @@ import { Solicitudes } from '../../models/solicitudes';
 import { ListarAmigosModal } from '../modals/listar-amigos-modal/listar-amigos-modal';
 import { AmigosService } from '../../services/amigos-service';
 import { ListarAmigos } from '../../models/listar-amigos';
+import { ListarNotificaciones } from '../../models/listar-notificaciones';
 
 @Component({
   selector: 'app-header',
@@ -25,6 +26,7 @@ export class Header implements OnInit {
   private amigosService = inject(AmigosService);
   error = '';
   solicitudes = signal<Solicitudes[]>([]);
+  notifiaciones = signal<ListarNotificaciones[]>([]);
   amigos = signal<ListarAmigos[]>([]);
   solicitudAceptada = 1;
   solicitudRechazada = 2;
@@ -63,6 +65,15 @@ export class Header implements OnInit {
           return;
         }
         this.solicitudes.set(res);
+      },
+    });
+    this.notificacionesService.ObtenerNotificaciones().subscribe({
+      next: (res) => {
+        if (!res || res.length === 0) {
+          this.error = 'No hay solicitudes.';
+          return;
+        }
+        this.notifiaciones.set(res);
       },
     });
   }

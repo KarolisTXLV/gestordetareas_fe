@@ -50,51 +50,69 @@
 
         @if (notificacionesAbiertas()) {
           <div
-            class="absolute right-0 top-11 w-72 bg-zinc-900 border border-zinc-700 rounded-xl shadow-xl z-50 p-4 flex flex-col gap-3"
+            class="absolute right-0 top-11 w-80 bg-zinc-900 border border-zinc-700 rounded-xl shadow-xl z-50 overflow-hidden"
           >
-            <p class="text-zinc-400 text-xs font-medium uppercase tracking-wider">Notificaciones</p>
+            <div class="px-4 py-3 border-b border-zinc-800">
+              <p class="text-zinc-400 text-xs font-medium uppercase tracking-wider">
+                Notificaciones
+              </p>
+            </div>
 
-            @if (solicitudes.length === 0) {
-              <div class="text-zinc-500 text-sm text-center py-4">Sin notificaciones por ahora</div>
+            @if (solicitudes().length === 0 && notifiaciones().length === 0) {
+              <div class="text-zinc-500 text-sm text-center py-8">Sin notificaciones por ahora</div>
             }
 
-            @for (solicitud of solicitudes(); track solicitud.idSolicitud) {
-              <div class="bg-zinc-800 rounded-lg p-3 flex flex-col gap-2">
-                <div class="flex items-center gap-2">
-                  <div
-                    class="size-7 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-300 text-xs font-semibold shrink-0"
-                  >
-                    {{ solicitud.nombreSolicitante[0].toUpperCase() }}
+            <div class="flex flex-col max-h-96 overflow-y-auto">
+              @for (solicitud of solicitudes(); track solicitud.idSolicitud) {
+                <div
+                  class="px-4 py-3 border-b border-zinc-800 last:border-0 hover:bg-zinc-800/50 transition-colors"
+                >
+                  <div class="flex items-center gap-3 mb-3">
+                    <div
+                      class="size-8 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-300 text-xs font-semibold shrink-0"
+                    >
+                      {{ solicitud.nombreSolicitante[0].toUpperCase() }}
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <p class="text-white text-xs font-medium truncate">
+                        {{ solicitud.nombreSolicitante }}
+                      </p>
+                      @if (solicitud.tiposSolicitudes === 0) {
+                        <p class="text-zinc-500 text-xs">Solicitud de amistad</p>
+                      }
+                      @if (solicitud.tiposSolicitudes === 1) {
+                        <p class="text-zinc-500 text-xs">Solicitud de espacio de trabajo</p>
+                      }
+                    </div>
                   </div>
-                  <div class="flex-1 min-w-0">
-                    <p class="text-white text-xs font-medium truncate">
-                      {{ solicitud.nombreSolicitante }}
-                    </p>
-                    @if (solicitud.tiposSolicitudes === 0) {
-                      <p class="text-zinc-400 text-xs">Solicitud de amistad</p>
-                    }
-                    @if (solicitud.tiposSolicitudes === 1) {
-                      <p class="text-zinc-400 text-xs">Solicitud de espacio de trabajo</p>
-                    }
+                  <div class="flex gap-2">
+                    <button
+                      (click)="aceptarSolicitud(solicitud.idSolicitud)"
+                      class="flex-1 py-1.5 text-xs bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/30 rounded-lg transition-colors"
+                    >
+                      Aceptar
+                    </button>
+                    <button
+                      (click)="rechazarSolicitud(solicitud.idSolicitud)"
+                      class="flex-1 py-1.5 text-xs bg-red-500/15 hover:bg-red-500/25 text-red-400 border border-red-500/30 rounded-lg transition-colors"
+                    >
+                      Rechazar
+                    </button>
                   </div>
                 </div>
+              }
 
-                <div class="flex gap-2">
-                  <button
-                    (click)="aceptarSolicitud(solicitud.idSolicitud)"
-                    class="flex-1 px-2 py-1 text-xs bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30 rounded-lg transition-colors"
-                  >
-                    Aceptar
-                  </button>
-                  <button
-                    (click)="rechazarSolicitud(solicitud.idSolicitud)"
-                    class="flex-1 px-2 py-1 text-xs bg-red-500/20 hover:bg-red-500/30 text-red-400 border border-red-500/30 rounded-lg transition-colors"
-                  >
-                    Rechazar
-                  </button>
+              @for (notificacion of notifiaciones(); track notificacion.idNotificacion) {
+                <div
+                  class="px-4 py-3 border-b border-zinc-800 last:border-0 hover:bg-zinc-800/50 transition-colors"
+                >
+                  <div class="flex items-center gap-3">
+                    <div class="size-2 rounded-full bg-amber-400 shrink-0"></div>
+                    <p class="text-zinc-300 text-xs">{{ notificacion.tituloNotificacion }}</p>
+                  </div>
                 </div>
-              </div>
-            }
+              }
+            </div>
           </div>
         }
       </div>
@@ -162,9 +180,7 @@
         />
       }
       @if (mostrarAmigosAbierto()) {
-        <app-listar-amigos-modal
-        [amigos]="amigos()"
-        (cerrar)="mostrarAmigosAbierto.set(false)" />
+        <app-listar-amigos-modal [amigos]="amigos()" (cerrar)="mostrarAmigosAbierto.set(false)" />
       }
     </div>
   </header>

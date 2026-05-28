@@ -1,0 +1,65 @@
+<div
+  class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+  (click)="onOverlayClick($event)"
+>
+  <div class="bg-zinc-900 border border-zinc-700 rounded-xl w-full max-w-md mx-4 p-6 shadow-xl">
+    <div class="flex items-center justify-between mb-5">
+      <h2 class="text-white font-semibold text-lg">Invitar a colaborar</h2>
+      <button (click)="cerrar.emit()" class="text-zinc-400 hover:text-white transition-colors">
+        ✕
+      </button>
+    </div>
+
+    <div class="flex flex-col gap-4">
+      <div class="flex items-center gap-3 bg-zinc-800 rounded-lg px-4 py-3">
+        <div
+          class="size-9 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-300 text-sm font-semibold shrink-0"
+        >
+          {{ amigo().nombreAmigo[0].toUpperCase() }}
+        </div>
+        <p class="text-white text-sm font-medium">{{ amigo().nombreAmigo }}</p>
+      </div>
+
+      @for (espacio of espaciosDeTrabajo(); track espacio.idEspacioDeTrabajo) {
+        <button
+          (click)="InvitarAlEspacio(espacio.idEspacioDeTrabajo, amigo().idAmigo)"
+          class="flex items-center justify-between w-full text-left bg-amber-900/30 border border-amber-400/10 hover:border-amber-400/30 hover:bg-amber-900/50 rounded-xl px-4 py-3.5 transition-all duration-200 group"
+        >
+          <div class="flex items-center gap-3 min-w-0">
+            <svg
+              class="w-4 h-4 text-amber-400/25 group-hover:text-amber-400/50 transition-all shrink-0"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+            <p class="text-sm font-medium text-amber-200 truncate">
+              {{ espacio.nombreEspacioTrabajo }}
+            </p>
+          </div>
+          <button
+            class="shrink-0 px-3 py-1.5 text-xs bg-red-500/20 hover:bg-red-500/30 text-red-400 font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Eliminar
+          </button>
+        </button>
+      }
+
+      <div class="flex justify-end gap-2 mt-1">
+        <button
+          (click)="cerrar.emit()"
+          class="px-4 py-2 text-sm text-zinc-400 hover:text-white transition-colors"
+        >
+          Cancelar
+        </button>
+        <button
+          class="px-4 py-2 text-sm bg-amber-500 hover:bg-amber-400 text-black font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Invitar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

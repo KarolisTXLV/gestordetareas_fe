@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Solicitudes } from '../models/solicitudes';
+import { ListarNotificaciones } from '../models/listar-notificaciones';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,10 @@ export class NotificacionesService {
 
   ObtenerSolicitudesDeAmistad() {
     return this.http.get<Solicitudes[]>(`${this.baseUrl}/Usuarios/ListarSolicitudesDeAmistad`);
+  }
+
+  ObtenerNotificaciones(){
+     return this.http.get<ListarNotificaciones[]>(`${this.baseUrl}/Usuarios/ListarNotificacionesPorUsuario`);
   }
 
   EnviarSolicitudAmistad(idUsuarioReceptor: number, tipoSolicitud: number) {

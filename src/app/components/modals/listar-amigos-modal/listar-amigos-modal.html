@@ -8,7 +8,9 @@
   >
     <div class="flex items-center justify-between mb-5">
       <h2 class="text-white font-semibold">Mis amigos</h2>
-      <button (click)="cerrar.emit()" class="text-zinc-400 hover:text-white transition-colors">✕</button>
+      <button (click)="cerrar.emit()" class="text-zinc-400 hover:text-white transition-colors">
+        ✕
+      </button>
     </div>
 
     <div class="flex flex-col gap-2">
@@ -17,14 +19,30 @@
       }
 
       @for (amigo of amigos(); track amigo.idAmigo) {
-        <div class="flex items-center gap-3 bg-zinc-800 rounded-lg px-4 py-3">
-          <div class="size-8 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-300 text-sm font-semibold shrink-0">
-            {{ amigo.nombreAmigo[0].toUpperCase() }}
+        <div class="flex items-center gap-3 bg-zinc-800 rounded-lg px-4 py-3 justify-between">
+          <div class="flex items-center gap-3">
+            <div
+              class="size-8 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-300 text-sm font-semibold shrink-0"
+            >
+              {{ amigo.nombreAmigo[0].toUpperCase() }}
+            </div>
+            <p class="text-white text-sm font-medium flex-1">{{ amigo.nombreAmigo }}</p>
           </div>
-          <p class="text-white text-sm font-medium flex-1">{{ amigo.nombreAmigo }}</p>
+
+          <button
+            (click)="abrirModal(amigo)"
+            class="px-4 py-2 text-xs bg-amber-500 hover:bg-amber-400 text-black font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Invitar a colaborar
+          </button>
         </div>
       }
+      @if (InvitacionAColaborarAbierta()) {
+        <app-invitacion-acolaborar-modal
+          [amigo]="amigoSeleccionado()!"
+          (cerrar)="InvitacionAColaborarAbierta.set(false)"
+        />
+      }
     </div>
-
   </div>
 </div>
