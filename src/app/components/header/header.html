@@ -106,9 +106,16 @@
                 <div
                   class="px-4 py-3 border-b border-zinc-800 last:border-0 hover:bg-zinc-800/50 transition-colors"
                 >
-                  <div class="flex items-center gap-3">
-                    <div class="size-2 rounded-full bg-amber-400 shrink-0"></div>
-                    <p class="text-zinc-300 text-xs">{{ notificacion.tituloNotificacion }}</p>
+                  <div class="flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-3">
+                      <div class="size-2 rounded-full bg-amber-400 shrink-0"></div>
+                      <p class="text-zinc-300 text-xs">{{ notificacion.tituloNotificacion }}</p>
+                    </div>
+                    <div>
+                      <button (click)="marcarNotificacionComoLeida(notificacion.idNotificacion)">
+                        Leído
+                      </button>
+                    </div>
                   </div>
                 </div>
               }
@@ -147,9 +154,16 @@
             class="absolute right-0 top-11 w-56 bg-zinc-900 border border-zinc-700 rounded-xl shadow-xl z-50 py-2 flex flex-col"
           >
             <button
+              (click)="copiarFriendTag()"
+              title="Click para copiar"
               class="flex items-center gap-2 px-4 py-2 text-sm text-zinc-300 hover:bg-zinc-800 transition-colors"
             >
-              <i class="ti ti-user text-base"></i> Mi perfil
+              <i class="ti ti-user text-base"></i>
+              <span>Mi friendTag: </span>
+              <span class="text-amber-500 hover:text-amber-300 text-sm">{{
+                datosUsuario()?.friendTag
+              }}</span>
+              <i class="ti ti-copy text-xs text-zinc-500"></i>
             </button>
             <button
               (click)="mostrarAmigosAbierto.set(true)"

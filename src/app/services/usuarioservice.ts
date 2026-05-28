@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { CrearUsuario } from '../models/crear-usuario';
+import { ObtenerDatosUsuarioLogueado } from '../models/obtener-datos-usuario-logueado';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,9 @@ export class Usuarioservice {
       `${this.baseUrl}/Usuarios/CrearUsuario`,
       dto
     );
+  }
+  obtenerDatosDelUsuarioLogueado(){
+    return this.http.get<ObtenerDatosUsuarioLogueado>(`${this.baseUrl}/Usuarios/Obtener`)
   }
 }
 

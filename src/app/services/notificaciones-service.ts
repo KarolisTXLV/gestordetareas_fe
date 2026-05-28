@@ -17,6 +17,12 @@ export class NotificacionesService {
   ObtenerNotificaciones(){
      return this.http.get<ListarNotificaciones[]>(`${this.baseUrl}/Usuarios/ListarNotificacionesPorUsuario`);
   }
+  MarcarNotificacionesComoLeidas(idNotificacion: number){
+        return this.http.post(
+      `${this.baseUrl}/Usuarios/MarcarNotificacionComoLeida/${idNotificacion}`,
+      null,
+    );
+  }
 
   EnviarSolicitudAmistad(idUsuarioReceptor: number, tipoSolicitud: number) {
     return this.http.post(
@@ -25,7 +31,7 @@ export class NotificacionesService {
     );
   }
 
-  TramitarSolicitudAmistad(idSolicitud: number, resolucionSolicitud: number) {
+  TramitarSolicitud(idSolicitud: number, resolucionSolicitud: number) {
     return this.http.post<void>(
       `${this.baseUrl}/Usuarios/TramitarSolicitud/${idSolicitud}/${resolucionSolicitud}`,
       null,

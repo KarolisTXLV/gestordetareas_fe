@@ -9,6 +9,8 @@ import { ListarAmigosModal } from '../modals/listar-amigos-modal/listar-amigos-m
 import { AmigosService } from '../../services/amigos-service';
 import { ListarAmigos } from '../../models/listar-amigos';
 import { ListarNotificaciones } from '../../models/listar-notificaciones';
+import { Usuarioservice } from '../../services/usuarioservice';
+import { ObtenerDatosUsuarioLogueado } from '../../models/obtener-datos-usuario-logueado';
 
 @Component({
   selector: 'app-header',
@@ -24,12 +26,15 @@ export class Header implements OnInit {
   ajustesAbiertos = signal(false);
   private notificacionesService = inject(NotificacionesService);
   private amigosService = inject(AmigosService);
+  private usuarioService = inject(Usuarioservice);
   error = '';
   solicitudes = signal<Solicitudes[]>([]);
   notifiaciones = signal<ListarNotificaciones[]>([]);
   amigos = signal<ListarAmigos[]>([]);
+  datosUsuario = signal<ObtenerDatosUsuarioLogueado | null>(null);
   solicitudAceptada = 1;
   solicitudRechazada = 2;
+  copiado = false
 
   rutaActual = toSignal(
     this.router.events.pipe(
@@ -44,6 +49,7 @@ export class Header implements OnInit {
     this.amigosService.ListarTodosLosAmigos().subscribe({
       next: (res) => this.amigos.set(res),
     });
+    this.obtenerDatosUsuarioLogueado();
   }
 
   vueltaAtras() {
@@ -78,17 +84,37 @@ export class Header implements OnInit {
     });
   }
   aceptarSolicitud(idSolicitud: number) {
-    this.notificacionesService
-      .TramitarSolicitudAmistad(idSolicitud, this.solicitudAceptada)
-      .subscribe({
-        next: () => this.MostrarNotificaciones(),
-      });
+    this.notificacionesService.TramitarSolicitud(idSolicitud, this.solicitudAceptada).subscribe({
+      next: () => this.MostrarNotificaciones(),
+    });
   }
   rechazarSolicitud(idSolicitud: number) {
-    this.notificacionesService
-      .TramitarSolicitudAmistad(idSolicitud, this.solicitudRechazada)
-      .subscribe({
-        next: () => this.MostrarNotificaciones(),
-      });
+    this.notificacionesService.TramitarSolicitud(idSolicitud, this.solicitudRechazada).subscribe({
+      next: () => this.MostrarNotificaciones(),
+    });
   }
+
+  marcarNotificacionComoLeida(idNotificacion: number) {
+    this.notificacionesService.MarcarNotificacionesComoLeidas(idNotificacion).subscribe({
+      next: () => {
+        this.MostrarNotificaciones();
+      },
+    });
+  }
+
+  obtenerDatosUsuarioLogueado() {
+    this.usuarioService.obtenerDatosDelUsuarioLogueado().subscribe({
+      next: (data) => this.datosUsuario.set(data),
+    });
+  }
+
+  copiarFriendTag() {
+  const tag = this.datosUsuario()?.friendTag;
+  if (!tag) return;
+
+  navigator.clipboard.writeText(tag).then(() => {
+    this.copiado = true;
+    setTimeout(() => this.copiado = false, 2000);
+  });
+}
 }
