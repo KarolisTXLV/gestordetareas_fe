@@ -30,6 +30,7 @@
         <label class="text-zinc-400 text-sm">Nombre <span class="text-amber-400">*</span></label>
         <input
           [(ngModel)]="nombreTarea"
+          minlength="3"
           type="text"
           placeholder="Nombre de la tarea"
           class="bg-zinc-800 border border-zinc-700 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500 placeholder:text-zinc-500"
@@ -37,10 +38,11 @@
       </div>
 
       <div class="flex flex-col gap-1">
-        <label class="text-zinc-400 text-sm">Descripción</label>
+        <label class="text-zinc-400 text-sm">Descripción <span class="text-amber-400">*</span></label>
         <textarea
           [(ngModel)]="descripcionTarea"
-          placeholder="Descripción opcional..."
+          minlength="3"
+          placeholder="Descripción"
           rows="3"
           class="bg-zinc-800 border border-zinc-700 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500 placeholder:text-zinc-500 resize-none"
         ></textarea>

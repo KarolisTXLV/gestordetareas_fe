@@ -31,6 +31,7 @@ export class PanelEspaciosTrabajo implements OnInit {
   }
 
   onSubmit() {
+    this.cargando = true
     const dto: CrearNuevoEspacioDeTrabajo = {
       nombre: this.nombreEspacioTrabajo.trim(),
     };
@@ -40,6 +41,7 @@ export class PanelEspaciosTrabajo implements OnInit {
         this.nombreEspacioTrabajo = '';
         this.espaciosDeTrabajoService.cargarEspacios(true);
         this.toast.success("Espacio de trabajo creado correctamente")
+        this.cargando = false
       },
       error: (err) => {
         this.cargando = false;

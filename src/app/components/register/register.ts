@@ -12,6 +12,7 @@ import { ToastService } from '../../services/toast-service';
   templateUrl: './register.html',
 })
 export class RegistroComponent {
+  cargando         = false;
   private usuarioService = inject(Usuarioservice);
   private authService = inject(AuthService);
   private toast = inject(ToastService);
@@ -24,6 +25,7 @@ export class RegistroComponent {
   };
 
   onSubmit() {
+    this.cargando = true;
     this.usuarioService.crear(this.dto).subscribe({
       next: () => {
         this.authService.login(this.dto.correoUsuario, this.dto.contrasenaUsuario).subscribe({
@@ -35,9 +37,14 @@ export class RegistroComponent {
         });
       },
       error: (err) => {
+        this.cargando = false
         if (err.status === 409) {
           this.toast.error('El correo ya está registrado');
-        } else {
+        }
+        if(err.status === 467){
+          this.toast.error("La contraseña tiene que ser mínimo de 15 carácteres")
+        }
+        else {
           this.toast.error('Algo salió mal.');
         }
       },
