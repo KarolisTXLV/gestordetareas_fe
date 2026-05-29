@@ -4,6 +4,7 @@ import { MostrarEspaciosDeTrabajo } from '../../models/mostrar-espacios-de-traba
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CrearNuevoEspacioDeTrabajo } from '../../models/crear-nuevo-espacio-de-trabajo';
+import { ToastService } from '../../services/toast-service';
 
 @Component({
   selector: 'app-panel-espacios-trabajo',
@@ -15,12 +16,13 @@ export class PanelEspaciosTrabajo implements OnInit {
   idEspacioSeleccionado = signal<number | null>(null);
   private espaciosDeTrabajoService = inject(EspaciosDeTrabajoService);
   private router = inject(Router);
+  private toast = inject(ToastService);
   nombreEspacioTrabajo = '';
   espaciosDeTrabajo = this.espaciosDeTrabajoService.espaciosDeTrabajo;
   cargando = false;
 
   ngOnInit() {
-    this.espaciosDeTrabajoService.cargarEspacios(false);
+    this.espaciosDeTrabajoService.cargarEspacios(true);
   }
 
   seleccionarEspacio(id: number) {
@@ -37,6 +39,15 @@ export class PanelEspaciosTrabajo implements OnInit {
       next: () => {
         this.nombreEspacioTrabajo = '';
         this.espaciosDeTrabajoService.cargarEspacios(true);
+        this.toast.success("Espacio de trabajo creado correctamente")
+      },
+      error: (err) => {
+        this.cargando = false;
+        if (err.status === 400) {
+          this.toast.error('El nombre del espacio es demasiado corto');
+        } else {
+          this.toast.error('Error al buscar el usuario.');
+        }
       },
     });
   }
@@ -46,6 +57,7 @@ export class PanelEspaciosTrabajo implements OnInit {
     this.espaciosDeTrabajoService.eliminarEspacioDeTrabajo(id).subscribe(() => {
       this.cargando = false;
       this.espaciosDeTrabajoService.cargarEspacios(true);
+      this.toast.info("espacio de trabajo eliminado correctamente")
     });
   }
 }

@@ -11,6 +11,8 @@ import { ListarAmigos } from '../../models/listar-amigos';
 import { ListarNotificaciones } from '../../models/listar-notificaciones';
 import { Usuarioservice } from '../../services/usuarioservice';
 import { ObtenerDatosUsuarioLogueado } from '../../models/obtener-datos-usuario-logueado';
+import { ToastService } from '../../services/toast-service';
+import { EspaciosDeTrabajoService } from '../../services/espacios-de-trabajo-service';
 
 @Component({
   selector: 'app-header',
@@ -27,6 +29,8 @@ export class Header implements OnInit {
   private notificacionesService = inject(NotificacionesService);
   private amigosService = inject(AmigosService);
   private usuarioService = inject(Usuarioservice);
+  private espaciosDeTrabajoServie = inject(EspaciosDeTrabajoService)
+  private toast = inject(ToastService);
   error = '';
   solicitudes = signal<Solicitudes[]>([]);
   notifiaciones = signal<ListarNotificaciones[]>([]);
@@ -34,7 +38,7 @@ export class Header implements OnInit {
   datosUsuario = signal<ObtenerDatosUsuarioLogueado | null>(null);
   solicitudAceptada = 1;
   solicitudRechazada = 2;
-  copiado = false
+  copiado = false;
 
   rutaActual = toSignal(
     this.router.events.pipe(
@@ -66,31 +70,33 @@ export class Header implements OnInit {
   MostrarNotificaciones() {
     this.notificacionesService.ObtenerSolicitudesDeAmistad().subscribe({
       next: (res) => {
-        if (!res || res.length === 0) {
-          this.error = 'No hay solicitudes.';
-          return;
-        }
-        this.solicitudes.set(res);
+        this.solicitudes.set(res ?? []);
       },
     });
+
     this.notificacionesService.ObtenerNotificaciones().subscribe({
       next: (res) => {
-        if (!res || res.length === 0) {
-          this.error = 'No hay solicitudes.';
-          return;
-        }
-        this.notifiaciones.set(res);
+        this.notifiaciones.set(res ?? []);
       },
     });
   }
   aceptarSolicitud(idSolicitud: number) {
     this.notificacionesService.TramitarSolicitud(idSolicitud, this.solicitudAceptada).subscribe({
-      next: () => this.MostrarNotificaciones(),
+      next: () => {
+        this.MostrarNotificaciones();
+        this.toast.success('Solicitud aceptada');
+        this.espaciosDeTrabajoServie.cargarEspacios(true);
+      },
+      error: () => this.toast.error('No se pudo aceptar la solicitud'),
     });
   }
   rechazarSolicitud(idSolicitud: number) {
     this.notificacionesService.TramitarSolicitud(idSolicitud, this.solicitudRechazada).subscribe({
-      next: () => this.MostrarNotificaciones(),
+      next: () => {
+        this.MostrarNotificaciones();
+        this.toast.success('Solicitud rechazada');
+      },
+      error: () => this.toast.error('No se pudo rechazar la solicitud'),
     });
   }
 
@@ -109,12 +115,12 @@ export class Header implements OnInit {
   }
 
   copiarFriendTag() {
-  const tag = this.datosUsuario()?.friendTag;
-  if (!tag) return;
+    const tag = this.datosUsuario()?.friendTag;
+    if (!tag) return;
 
-  navigator.clipboard.writeText(tag).then(() => {
-    this.copiado = true;
-    setTimeout(() => this.copiado = false, 2000);
-  });
-}
+    navigator.clipboard.writeText(tag).then(() => {
+      this.copiado = true;
+      setTimeout(() => (this.copiado = false), 2000);
+    });
+  }
 }

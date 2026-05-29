@@ -1,8 +1,9 @@
-import { Component, inject, input, output, signal } from '@angular/core';
+import { Component, inject, input, output, signal, ChangeDetectorRef } from '@angular/core';
 import { AmigosService } from '../../../services/amigos-service';
 import { ObtenerDatosDeAmigoPorFriendTag } from '../../../models/obtener-datos-de-amigo-por-friend-tag';
 import { FormsModule } from '@angular/forms';
 import { NotificacionesService } from '../../../services/notificaciones-service';
+import { ToastService } from '../../../services/toast-service';
 
 @Component({
   selector: 'app-buscar-amigo-modal',
@@ -20,9 +21,10 @@ export class BuscarAmigoModal {
   tipoSolicitud_SolicitudAmistad = 0;
   cargando = false;
   error = '';
-
+  private cdr = inject(ChangeDetectorRef);
+  private toast = inject(ToastService);
   private amigoService = inject(AmigosService);
-  private solicitudesService = inject(NotificacionesService)
+  private solicitudesService = inject(NotificacionesService);
 
   onOverlayClick(event: MouseEvent) {
     console.log('target:', (event.target as HTMLElement).className);
@@ -42,18 +44,18 @@ export class BuscarAmigoModal {
     this.amigoService.ObtenerAmigoPorFriendTag(this.friendTag).subscribe({
       next: (res) => {
         this.cargando = false;
-        if (!res) {
-          this.error = 'No existe ningún usuario con ese tag.';
-          return;
-        }
         this.nombreAmigo.set(res.nombreUsuario);
         this.idAmigo = res.idUsuario;
         this.amigoEncontrado.emit({ nombreUsuario: res.nombreUsuario, idUsuario: res.idUsuario });
       },
       error: (err) => {
         this.cargando = false;
-        this.error = 'Error al buscar el usuario.';
-        console.error(err);
+        this.cdr.detectChanges();
+        if (err.status === 404) {
+          this.toast.error('No existe ningún usuario con ese tag.');
+        } else {
+          this.toast.error('Error al buscar el usuario.');
+        }
       },
     });
   }
@@ -62,7 +64,18 @@ export class BuscarAmigoModal {
       .EnviarSolicitudAmistad(this.idAmigo, this.tipoSolicitud_SolicitudAmistad)
       .subscribe({
         next: () => {
+          this.toast.success('petición de amistad enviada');
           this.cerrar.emit();
+        },
+        error: (err) => {
+          this.cargando = false;
+          this.cdr.detectChanges();
+          if (err.status === 409) {
+            this.toast.error('El usuario ya es tu amigo');
+          }
+          if (err.status === 455) {
+            this.toast.error('Ya tienes una solicitud de amistad pendiente con este usuario.');
+          }
         },
       });
   }
