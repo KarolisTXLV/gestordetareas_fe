@@ -60,6 +60,8 @@ export class BuscarAmigoModal {
     });
   }
   onAnadirAmigo() {
+    this.cargando = true;
+    this.cdr.detectChanges();
     this.solicitudesService
       .EnviarSolicitudAmistad(this.idAmigo, this.tipoSolicitud_SolicitudAmistad)
       .subscribe({

@@ -63,9 +63,6 @@ export class Header implements OnInit {
     localStorage.removeItem('token');
     this.router.navigate(['/login']);
   }
-  onAmigoEncontrado(amigo: { nombreUsuario: string; idUsuario: number }) {
-    console.log(amigo.nombreUsuario, amigo.idUsuario);
-  }
 
   MostrarNotificaciones() {
     this.notificacionesService.ObtenerSolicitudesDeAmistad().subscribe({
