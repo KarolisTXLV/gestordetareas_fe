@@ -2,3 +2,13 @@
 @plugin "tailwind-scrollbar-hide";
 
 @source inline("sm:inline");
+
+html, body {
+  overflow: hidden;
+}
+
+@media (max-width: 1024px) {
+  html, body {
+    overflow: auto;
+  }
+}
