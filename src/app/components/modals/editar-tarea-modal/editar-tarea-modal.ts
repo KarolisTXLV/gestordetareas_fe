@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { TareasService } from '../../../services/tareas-service';
 import { ObtenerTareas } from '../../../models/obtener-tareas';
 import { EditarTarea } from '../../../models/editar-tarea';
+import { ToastService } from '../../../services/toast-service';
 
 @Component({
   selector: 'app-editar-tarea-modal',
@@ -25,6 +26,7 @@ export class EditarTareaModal implements OnInit {
   error            = '';
 
   private tareaService = inject(TareasService);
+  private toast = inject(ToastService)
 
   ngOnInit() {
     this.nombreTarea      = this.tarea().nombreTarea;
@@ -60,16 +62,19 @@ export class EditarTareaModal implements OnInit {
         this.cargando = false;
         this.tareaEditada.emit();
         this.cerrar.emit();
+        this.toast.success("Tarea editada")
       },
       error: (err) => {
         this.cargando = false;
         this.error    = 'Error al editar la tarea.';
+        this.toast.error("Error al editar la tarea")
         console.error(err);
       },
     });
   }
 
   QuitarPrioridad(){
+    this.cargando = true
     const t = this.tarea();
     this.tareaService.QuitarPrioridad(
     {
@@ -86,6 +91,8 @@ export class EditarTareaModal implements OnInit {
       },t.idTarea
     ).subscribe({
       next: () => {
+        this.cargando = false
+        this.toast.success("Se ha quitado la prioridad")
         this.tareaEditada.emit();
       }
     });
@@ -93,13 +100,18 @@ export class EditarTareaModal implements OnInit {
 
   onEliminar() {
     if (!confirm('¿Eliminar esta tarea?')) return;
+    this.cargando=true
 
     this.tareaService.EliminarTarea(this.tarea().idTarea).subscribe({
       next: () => {
+        this.cargando = false
+        this.toast.success("Se ha eliminado")
         this.tareaEliminada.emit();
         this.cerrar.emit();
       },
       error: (err) => {
+        this.cargando = false
+        this.toast.error("Error al eliminar")
         this.error = 'Error al eliminar la tarea.';
         console.error(err);
       },

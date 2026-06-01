@@ -51,7 +51,7 @@
       <button
         [disabled]="cargando"
         type="submit"
-        class="w-full bg-linear-to-r from-amber-700 to-amber-900 hover:from-amber-600 hover:to-amber-800 active:scale-95 text-amber-200 font-semibold text-sm py-3 rounded-xl transition-all duration-200 border border-amber-700/50"
+        class="w-full bg-linear-to-r from-amber-700 to-amber-900 hover:from-amber-600 hover:to-amber-800 active:scale-95 text-amber-200 font-semibold text-sm py-3 rounded-xl transition-all duration-200 border border-amber-700/50 disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none"
       >
         {{ cargando ? 'Iniciando sesión...' : 'Iniciar sesión' }}
       </button>
