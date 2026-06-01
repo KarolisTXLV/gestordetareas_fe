@@ -9,9 +9,9 @@ export const routes: Routes = [
     canActivate: [authGuard],
     loadComponent: () => import('./components/header/header').then(m => m.Header),
     children: [
+      { path: '',           redirectTo: 'workspaces', pathMatch: 'full' },
       { path: 'workspaces', loadComponent: () => import('./components/panel-espacios-trabajo/panel-espacios-trabajo').then(m => m.PanelEspaciosTrabajo) },
       { path: 'workspace',  loadComponent: () => import('./components/espacio-de-trabajo/espacio-de-trabajo').then(m => m.EspacioDeTrabajo) },
     ]
   },
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
 ];
