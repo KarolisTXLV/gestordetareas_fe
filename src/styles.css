@@ -1,2 +1,4 @@
 @import 'tailwindcss';
 @plugin "tailwind-scrollbar-hide";
+
+@source inline("sm:inline");

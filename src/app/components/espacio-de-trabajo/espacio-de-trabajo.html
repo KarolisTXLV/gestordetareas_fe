@@ -1,7 +1,9 @@
 <div class="min-h-screen p-4 md:p-6 lg:p-8">
-  <div class="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 md:h-[calc(95vh-4rem)]">
+  <div
+    class="flex flex-col landscape:grid landscape:grid-cols-3 md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 landscape:h-[calc(100vh-2rem)] md:h-[calc(95vh-4rem)]"
+  >
     <div
-      class="bg-amber-800/20 border border-amber-700/30 rounded-2xl p-4 md:p-5 backdrop-blur-sm flex flex-col md:overflow-hidden"
+      class="bg-slate-800/50 border border-amber-900/50 rounded-2xl p-4 md:p-5 backdrop-blur-sm flex flex-col overflow-hidden landscape:max-h-[calc(100vh-2rem)]"
     >
       <div class="flex items-center justify-between mb-4 shrink-0">
         <div class="flex items-center gap-2">
@@ -20,7 +22,7 @@
           }}</span>
         </div>
       </div>
-      <div class="flex flex-col py-2 md:flex-1 md:overflow-y-auto scrollbar-hide">
+      <div class="flex flex-col py-2 flex-1 overflow-y-auto scrollbar-hide">
         @for (tarea of tareas().filter((t) => t.estadosTarea === 0); track tarea.idTarea) {
           <app-tarea-card
             [tarea]="tarea"
@@ -32,7 +34,7 @@
     </div>
 
     <div
-      class="bg-amber-800/20 border border-amber-700/30 rounded-2xl p-4 md:p-5 backdrop-blur-sm flex flex-col md:overflow-hidden"
+      class="bg-slate-800/50 border border-amber-900/50 rounded-2xl p-4 md:p-5 backdrop-blur-sm flex flex-col overflow-hidden landscape:max-h-[calc(100vh-2rem)]"
     >
       <div class="flex items-center justify-between mb-4 shrink-0">
         <div class="flex items-center gap-2">
@@ -43,7 +45,7 @@
           enProgreso()
         }}</span>
       </div>
-      <div class="flex flex-col py-2 md:flex-1 md:overflow-y-auto scrollbar-hide">
+      <div class="flex flex-col py-2 flex-1 overflow-y-auto scrollbar-hide">
         @for (tarea of tareas().filter((t) => t.estadosTarea === 1); track tarea.idTarea) {
           <app-tarea-card
             [tarea]="tarea"
@@ -55,7 +57,7 @@
     </div>
 
     <div
-      class="bg-amber-800/20 border border-amber-700/30 rounded-2xl p-4 md:p-5 backdrop-blur-sm flex flex-col md:overflow-hidden"
+      class="bg-slate-800/50 border border-amber-900/50 rounded-2xl p-4 md:p-5 backdrop-blur-sm flex flex-col overflow-hidden landscape:max-h-[calc(100vh-2rem)]"
     >
       <div class="flex items-center justify-between mb-4 shrink-0">
         <div class="flex items-center gap-2">
@@ -66,7 +68,7 @@
           completadas()
         }}</span>
       </div>
-      <div class="flex flex-col py-2 md:flex-1 md:overflow-y-auto scrollbar-hide">
+      <div class="flex flex-col py-2 flex-1 overflow-y-auto scrollbar-hide">
         @for (tarea of tareas().filter((t) => t.estadosTarea === 3); track tarea.idTarea) {
           <app-tarea-card
             [tarea]="tarea"

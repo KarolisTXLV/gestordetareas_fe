@@ -1,21 +1,21 @@
 <div
-  class="bg-linear-to-r from-amber-700 to-amber-950 w-full p-5 h-60 shadow-md relative rounded-xl md:overflow-hidden mb-4"
+  class="bg-linear-to-r from-slate-700 to-gray-950 w-full p-5 h-60 shadow-md relative rounded-xl md:overflow-hidden mb-4 bord border-l-3 border-l-amber-900"
 >
-  <div class="absolute top-4 left-4 right-4 flex justify-between items-center">
+  <div class="absolute top-4 left-4 right-4 flex justify-between items-center gap-2">
     <div>
       @if (!tarea().tienePrioridad) {
         <button
           (click)="modalPriorizarAbierto.set(true)"
-          class="bg-red-500/20 text-red-300 border border-red-500/30 rounded-xl px-3 py-1 text-xs font-medium"
+          class="bg-red-500/20 text-red-300 border border-red-500/30 rounded-xl px-2 sm:px-3 py-1 text-xs font-medium"
         >
-          ⚑ Priorizar
+          <span class="hidden lg:inline">⚑</span> Priorizar
         </button>
       }
       @if (tarea().tienePrioridad) {
         <div
-          class="flex items-center gap-1 bg-red-500/20 border border-red-500/30 rounded-xl px-3 py-1"
+          class="flex items-center gap-1 bg-red-500/20 border border-red-500/30 rounded-xl px-2 sm:px-3 py-1"
         >
-          <span class="text-red-300 text-xs">⚑</span>
+          <span class="hidden lg:inline text-red-300 text-xs">⚑</span>
           <span class="text-red-300 text-xs font-medium">{{
             tarea().fechaLimite | date: 'dd/MM/yyyy'
           }}</span>
@@ -24,7 +24,7 @@
     </div>
     <button
       (click)="modalEditarAbierto.set(true)"
-      class="bg-orange-400/20 text-orange-300 border border-orange-400/30 rounded-xl px-3 py-1 text-xs font-medium"
+      class="bg-orange-400/20 text-orange-300 border border-orange-400/30 rounded-xl px-2 sm:px-3 py-1 text-xs font-medium"
     >
       Editar
     </button>
@@ -39,23 +39,21 @@
   <select
     [ngModel]="tarea().estadosTarea"
     (ngModelChange)="cambiarEstado(+$event)"
-    class="appearance-none bg-amber-950/60 text-amber-300 border border-amber-700/40 hover:border-amber-500/60 rounded-xl pl-3 pr-8 py-1.5 text-xs font-medium cursor-pointer outline-none transition-all duration-200 absolute bottom-4 right-4"
+    class="appearance-none bg-slate-900/60 text-amber-300 border border-amber-700/40 hover:border-amber-500/60 rounded-xl pl-3 pr-8 py-1.5 text-xs font-medium cursor-pointer outline-none transition-all duration-200 absolute bottom-4 right-4"
   >
-    <option class="bg-amber-950 text-amber-200" [value]="0">⩒ Por empezar</option>
-    <option class="bg-amber-950 text-amber-200" [value]="1">⩒ En progreso</option>
-    <option class="bg-amber-950 text-amber-200" [value]="3">⩒ Completada</option>
+    <option class="bg-slate-900 text-amber-200" [value]="0">⩒ Por empezar</option>
+    <option class="bg-slate-900 text-amber-200" [value]="1">⩒ En progreso</option>
+    <option class="bg-slate-900 text-amber-200" [value]="3">⩒ Completada</option>
   </select>
 </div>
 @if (modalPriorizarAbierto()) {
   <div
     class="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
-    (click)="
-      $any($event.target).classList.contains('modal-overlay') && modalPriorizarAbierto.set(false)
-    "
+    (click)="modalPriorizarAbierto.set(false)"
   >
-    <div class="modal-overlay absolute inset-0"></div>
     <div
       class="bg-zinc-900 border border-zinc-700 rounded-xl w-full max-w-sm mx-4 p-6 shadow-xl relative z-10"
+      (click)="$event.stopPropagation()"
     >
       <div class="flex items-center justify-between mb-4">
         <h2 class="text-white font-semibold">Priorizar tarea</h2>
