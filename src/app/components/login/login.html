@@ -1,9 +1,9 @@
 <div class="min-h-screen bg-slate-900 flex items-center justify-center p-4 sm:p-6">
   <div
-    class="w-full max-w-sm bg-amber-900/25 border border-amber-800/40 rounded-2xl p-8 sm:p-10 backdrop-blur-sm"
+    class="w-full max-w-sm bg-zinc-900/50 border border-amber-600/40 rounded-2xl p-8 sm:p-10 backdrop-blur-sm"
   >
     <div
-      class="size-12 bg-amber-800/40 border border-amber-700/40 rounded-xl flex items-center justify-center mx-auto mb-5"
+      class="size-12 bg-amber-800/40 border border-amber-700/40 rounded-md flex items-center justify-center mx-auto mb-5"
     >
       <svg
         class="size-6 text-amber-400"
@@ -31,7 +31,7 @@
           name="email"
           [(ngModel)]="correo"
           placeholder="tu@email.com"
-          class="bg-amber-900/30 border border-amber-800/50 rounded-xl px-4 py-3 text-sm text-amber-200 placeholder:text-amber-800 focus:outline-none focus:border-amber-600/60 transition-colors"
+          class="bg-amber-900/30 border border-amber-600/50 rounded-md px-4 py-3 text-sm text-amber-200 placeholder:text-amber-800 focus:outline-none focus:border-amber-600/60 transition-colors"
         />
       </div>
 
@@ -44,14 +44,14 @@
           name="password"
           [(ngModel)]="contrasena"
           placeholder="••••••••"
-          class="bg-amber-900/30 border border-amber-800/50 rounded-xl px-4 py-3 text-sm text-amber-200 placeholder:text-amber-800 focus:outline-none focus:border-amber-600/60 transition-colors"
+          class="bg-amber-900/30 border border-amber-600/50 rounded-md px-4 py-3 text-sm text-amber-200 placeholder:text-amber-800 focus:outline-none focus:border-amber-600/60 transition-colors"
         />
       </div>
 
       <button
         [disabled]="cargando"
         type="submit"
-        class="w-full bg-linear-to-r from-amber-700 to-amber-900 hover:from-amber-600 hover:to-amber-800 active:scale-95 text-amber-200 font-semibold text-sm py-3 rounded-xl transition-all duration-200 border border-amber-700/50 disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none"
+        class="w-full bg-linear-to-r from-amber-700 to-amber-900 hover:from-amber-600 hover:to-amber-800 active:scale-95 text-amber-200 font-semibold text-sm py-3 rounded-md transition-all duration-200 border border-amber-700/50 disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none"
       >
         {{ cargando ? 'Iniciando sesión...' : 'Iniciar sesión' }}
       </button>

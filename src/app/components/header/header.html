@@ -1,15 +1,15 @@
-<div class="bg-slate-900 min-h-screen flex flex-col md:overflow-hidden">
+<div class="bg-slate-900/80 min-h-screen flex flex-col md:overflow-hidden">
   <header
-    class="flex items-center h-14 px-4 sm:px-6 bg-transparent border-b border-amber-800/30 shrink-0"
+    class="flex items-center h-14 px-4 sm:px-6 bg-transparent border-b border-amber-900/50 shrink-0"
   >
     <div class="flex-1">
       @if (rutaActual() !== '/workspaces') {
         <button
           (click)="vueltaAtras()"
-          class="flex items-center text-amber-500 hover:text-amber-300 text-sm transition-colors"
+          class="flex items-center gap-1 text-amber-700 hover:text-amber-400 text-xs uppercase tracking-wider transition-colors"
         >
           <svg
-            class="w-4 h-4"
+            class="w-3 h-3"
             fill="none"
             stroke="currentColor"
             stroke-width="2"
@@ -22,15 +22,15 @@
       }
     </div>
 
-    <span class="text-sm font-medium tracking-tight text-amber-200">
-      Just<span class="text-amber-600 font-normal">One</span>Step
+    <span class="text-xs font-medium tracking-widest uppercase text-amber-300">
+      Just<span class="text-amber-700 font-normal">One</span>Step
     </span>
 
     <div class="flex-1 flex items-center justify-end gap-1">
       <div class="relative">
         <button
           (click)="notificacionesAbiertas.set(!notificacionesAbiertas())"
-          class="relative size-9 flex items-center justify-center rounded-lg border border-amber-800/40 text-amber-500 hover:bg-amber-900/50 hover:text-amber-300 transition-colors"
+          class="relative size-9 flex items-center justify-center rounded-md border border-amber-900/50 text-amber-600 hover:bg-amber-900/30 hover:text-amber-400 transition-colors"
         >
           <svg
             class="w-4 h-4"
@@ -45,30 +45,34 @@
               d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
             />
           </svg>
-
           @if (solicitudes().length > 0 || notifiaciones().length > 0) {
-            <span class="absolute top-1.5 right-1.5 size-1.5 rounded-full bg-orange-500"></span>
+            <span
+              class="absolute top-1.5 right-1.5 size-1.5 rounded-full bg-amber-400 animate-pulse"
+            ></span>
           }
         </button>
 
         @if (notificacionesAbiertas()) {
           <div
-            class="absolute right-0 top-11 md:w-80 w-72 bg-zinc-900 border border-zinc-700 rounded-xl shadow-xl z-50 md:overflow-hidden"
+            class="absolute right-0 top-11 md:w-80 w-72 bg-zinc-900/90 border border-amber-900/50 rounded-md shadow-xl z-50 md:overflow-hidden"
           >
-            <div class="px-4 py-3 border-b border-zinc-800">
-              <p class="text-zinc-400 text-xs font-medium uppercase tracking-wider">
+            <div class="px-4 py-3 border-b border-amber-900/50 flex items-center gap-2">
+              <span class="size-2 rounded-full bg-amber-400 animate-pulse"></span>
+              <p class="text-amber-300 text-xs font-medium uppercase tracking-widest">
                 Notificaciones
               </p>
             </div>
 
             @if (solicitudes().length === 0 && notifiaciones().length === 0) {
-              <div class="text-zinc-500 text-sm text-center py-8">Sin notificaciones por ahora</div>
+              <div class="text-amber-800 text-xs uppercase tracking-wider text-center py-8">
+                Sin notificaciones por ahora
+              </div>
             }
 
             <div class="flex flex-col max-h-96 overflow-y-auto">
               @for (solicitud of solicitudes(); track solicitud.idSolicitud) {
                 <div
-                  class="px-4 py-3 border-b border-zinc-800 last:border-0 hover:bg-zinc-800/50 transition-colors"
+                  class="px-4 py-3 border-b border-amber-900/30 last:border-0 hover:bg-amber-900/20 transition-colors"
                 >
                   <div class="flex items-center gap-3 mb-3">
                     <div
@@ -77,27 +81,31 @@
                       {{ solicitud.nombreSolicitante[0].toUpperCase() }}
                     </div>
                     <div class="flex-1 min-w-0">
-                      <p class="text-white text-xs font-medium truncate">
+                      <p class="text-amber-200 text-xs font-medium truncate">
                         {{ solicitud.nombreSolicitante }}
                       </p>
                       @if (solicitud.tiposSolicitudes === 0) {
-                        <p class="text-zinc-500 text-xs">Solicitud de amistad</p>
+                        <p class="text-amber-700 text-xs uppercase tracking-wider">
+                          Solicitud de amistad
+                        </p>
                       }
                       @if (solicitud.tiposSolicitudes === 1) {
-                        <p class="text-zinc-500 text-xs">Solicitud de espacio de trabajo</p>
+                        <p class="text-amber-700 text-xs uppercase tracking-wider">
+                          Solicitud de espacio
+                        </p>
                       }
                     </div>
                   </div>
                   <div class="flex gap-2">
                     <button
                       (click)="aceptarSolicitud(solicitud.idSolicitud)"
-                      class="flex-1 py-1.5 text-xs bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/30 rounded-lg transition-colors"
+                      class="flex-1 py-1.5 text-xs bg-amber-500/15 hover:bg-amber-500/25 text-amber-400 uppercase tracking-wider border border-amber-600/50 rounded-md transition-colors"
                     >
                       Aceptar
                     </button>
                     <button
                       (click)="rechazarSolicitud(solicitud.idSolicitud)"
-                      class="flex-1 py-1.5 text-xs bg-red-500/15 hover:bg-red-500/25 text-red-400 border border-red-500/30 rounded-lg transition-colors"
+                      class="flex-1 py-1.5 text-xs bg-red-500/15 hover:bg-red-500/25 text-red-400 uppercase tracking-wider border border-red-500/30 rounded-md transition-colors"
                     >
                       Rechazar
                     </button>
@@ -107,18 +115,18 @@
 
               @for (notificacion of notifiaciones(); track notificacion.idNotificacion) {
                 <div
-                  class="px-3 py-3 md:px-4 border-b border-zinc-800 last:border-0 hover:bg-zinc-800/50 transition-colors group"
+                  class="px-3 py-3 md:px-4 border-b border-amber-900/30 last:border-0 hover:bg-amber-900/20 transition-colors group"
                 >
                   <div class="flex items-center justify-between gap-3">
                     <div class="flex items-center gap-2 md:gap-3 min-w-0">
                       <div class="size-2 rounded-full bg-amber-400 shrink-0"></div>
-                      <p class="text-zinc-300 text-xs leading-relaxed wrap-break-word min-w-0">
+                      <p class="text-amber-200 text-xs leading-relaxed wrap-break-word min-w-0">
                         {{ notificacion.tituloNotificacion }}
                       </p>
                     </div>
                     <button
                       (click)="marcarNotificacionComoLeida(notificacion.idNotificacion)"
-                      class="shrink-0 size-8 flex items-center justify-center bg-amber-500/50 hover:bg-amber-400 text-black font-bold text-base rounded-lg transition-all md:opacity-0 md:group-hover:opacity-100"
+                      class="shrink-0 size-8 flex items-center justify-center bg-amber-500/15 hover:bg-amber-500/25 text-amber-400 text-base rounded-md transition-all md:opacity-0 md:group-hover:opacity-100"
                     >
                       ✓
                     </button>
@@ -133,7 +141,7 @@
       <div class="relative">
         <button
           (click)="ajustesAbiertos.set(!ajustesAbiertos())"
-          class="size-9 flex items-center justify-center rounded-lg border border-amber-800/40 text-amber-500 hover:bg-amber-900/50 hover:text-amber-300 transition-colors"
+          class="size-9 flex items-center justify-center rounded-md border border-amber-900/50 text-amber-600 hover:bg-amber-900/30 hover:text-amber-400 transition-colors"
         >
           <svg
             class="w-4 h-4"
@@ -157,42 +165,41 @@
 
         @if (ajustesAbiertos()) {
           <div
-            class="absolute right-0 top-11 w-56 bg-zinc-900 border border-zinc-700 rounded-xl shadow-xl z-50 py-2 flex flex-col"
+            class="absolute right-0 top-11 w-56 bg-zinc-900/90 border border-amber-900/50 rounded-md shadow-xl z-50 py-2 flex flex-col"
           >
             <button
               (click)="copiarFriendTag()"
               title="Click para copiar"
-              class="flex items-center gap-2 px-4 py-2 text-sm text-zinc-300 hover:bg-zinc-800 transition-colors"
+              class="flex items-center gap-2 px-4 py-2 text-xs text-amber-600 hover:bg-amber-900/30 hover:text-amber-400 uppercase tracking-wider transition-colors"
             >
               <i class="ti ti-user text-base"></i>
-              <span>Mi friendTag: </span>
-              <span class="text-amber-500 hover:text-amber-300 text-sm">{{
-                datosUsuario()?.friendTag
-              }}</span>
-              <i class="ti ti-copy text-xs text-zinc-500"></i>
+              <span>FriendTag: </span>
+              <span class="text-amber-400">{{ datosUsuario()?.friendTag }}</span>
+              <i class="ti ti-copy text-xs text-amber-700"></i>
             </button>
             <button
               (click)="mostrarAmigosAbierto.set(true)"
-              class="flex items-center gap-2 px-4 py-2 text-sm text-zinc-300 hover:bg-zinc-800 transition-colors"
+              class="flex items-center gap-2 px-4 py-2 text-xs text-amber-600 hover:bg-amber-900/30 hover:text-amber-400 uppercase tracking-wider transition-colors"
             >
               <i class="ti ti-users text-base"></i> Mis amigos
             </button>
             <button
               (click)="buscarAmigoAbierto.set(true)"
-              class="flex items-center gap-2 px-4 py-2 text-sm text-zinc-300 hover:bg-zinc-800 transition-colors"
+              class="flex items-center gap-2 px-4 py-2 text-xs text-amber-600 hover:bg-amber-900/30 hover:text-amber-400 uppercase tracking-wider transition-colors"
             >
               <i class="ti ti-user-search text-base"></i> Buscar amigos
             </button>
-            <div class="border-t border-zinc-700 my-1"></div>
+            <div class="border-t border-amber-900/50 my-1"></div>
             <button
               (click)="CerrarSesion()"
-              class="flex items-center gap-2 px-4 py-2 text-sm text-red-400 hover:bg-zinc-800 transition-colors"
+              class="flex items-center gap-2 px-4 py-2 text-xs text-red-500 hover:bg-red-500/10 uppercase tracking-wider transition-colors"
             >
               <i class="ti ti-logout text-base"></i> Cerrar sesión
             </button>
           </div>
         }
       </div>
+
       @if (buscarAmigoAbierto()) {
         <app-buscar-amigo-modal (cerrar)="buscarAmigoAbierto.set(false)" />
       }

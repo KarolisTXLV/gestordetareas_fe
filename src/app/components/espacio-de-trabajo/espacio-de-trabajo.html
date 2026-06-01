@@ -1,81 +1,87 @@
 <div class="min-h-screen p-4 md:p-6 lg:p-8">
-  <div
-    class="flex flex-col landscape:grid landscape:grid-cols-3 md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 landscape:h-[calc(100vh-2rem)] md:h-[calc(95vh-4rem)]"
-  >
+  <div class="max-w-7xl mx-auto h-full">
     <div
-      class="bg-slate-800/50 border border-amber-900/50 rounded-2xl p-4 md:p-5 backdrop-blur-sm flex flex-col overflow-hidden landscape:max-h-[calc(85vh-2rem)]"
+      class="flex flex-col landscape:grid landscape:grid-cols-3 md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 landscape:h-[calc(88vh-2rem)] md:h-[calc(95vh-4rem)]"
     >
-      <div class="flex items-center justify-between mb-4 shrink-0">
-        <div class="flex items-center gap-2">
-          <span class="size-2 rounded-full bg-amber-400 animate-pulse"></span>
-          <h2 class="text-amber-300 text-xs font-medium tracking-widest uppercase">Por empezar</h2>
+      <div
+        class="bg-zinc-800/50 border border-amber-900/50 rounded-2xl p-4 md:p-5 backdrop-blur-sm flex flex-col overflow-hidden landscape:max-h-[calc(100vh-2rem)]"
+      >
+        <div class="flex items-center justify-between mb-4 shrink-0">
+          <div class="flex items-center gap-2">
+            <span class="size-2 rounded-full bg-amber-400 animate-pulse"></span>
+            <h2 class="text-amber-300 text-xs font-medium tracking-widest uppercase">
+              Por empezar
+            </h2>
+          </div>
+          <div class="flex gap-4">
+            <button
+              (click)="abrirModal()"
+              class="text-xs bg-amber-500/15 text-amber-400 px-2.5 py-1 rounded-full"
+            >
+              +
+            </button>
+            <span class="text-xs bg-amber-500/15 text-amber-400 px-2.5 py-1 rounded-full">{{
+              porEmpezar()
+            }}</span>
+          </div>
         </div>
-        <div class="flex gap-4">
-          <button
-            (click)="abrirModal()"
-            class="text-xs bg-amber-500/15 text-amber-400 px-2.5 py-1 rounded-full"
-          >
-            +
-          </button>
+        <div class="flex flex-col py-2 flex-1 overflow-y-auto scrollbar-hide">
+          @for (tarea of tareas().filter((t) => t.estadosTarea === 0); track tarea.idTarea) {
+            <app-tarea-card
+              [tarea]="tarea"
+              (tareaEditada)="onTareaCreada()"
+              (tareaEliminada)="onTareaCreada()"
+            />
+          }
+        </div>
+      </div>
+
+      <div
+        class="bg-zinc-800/50 border border-amber-900/50 rounded-2xl p-4 md:p-5 backdrop-blur-sm flex flex-col overflow-hidden landscape:max-h-[calc(100vh-2rem)]"
+      >
+        <div class="flex items-center justify-between mb-4 shrink-0">
+          <div class="flex items-center gap-2">
+            <span class="size-2 rounded-full bg-amber-400 animate-pulse"></span>
+            <h2 class="text-amber-300 text-xs font-medium tracking-widest uppercase">
+              En Progreso
+            </h2>
+          </div>
           <span class="text-xs bg-amber-500/15 text-amber-400 px-2.5 py-1 rounded-full">{{
-            porEmpezar()
+            enProgreso()
           }}</span>
         </div>
-      </div>
-      <div class="flex flex-col py-2 flex-1 overflow-y-auto scrollbar-hide">
-        @for (tarea of tareas().filter((t) => t.estadosTarea === 0); track tarea.idTarea) {
-          <app-tarea-card
-            [tarea]="tarea"
-            (tareaEditada)="onTareaCreada()"
-            (tareaEliminada)="onTareaCreada()"
-          />
-        }
-      </div>
-    </div>
-
-    <div
-      class="bg-slate-800/50 border border-amber-900/50 rounded-2xl p-4 md:p-5 backdrop-blur-sm flex flex-col overflow-hidden landscape:max-h-[calc(85vh-2rem)]"
-    >
-      <div class="flex items-center justify-between mb-4 shrink-0">
-        <div class="flex items-center gap-2">
-          <span class="size-2 rounded-full bg-amber-400 animate-pulse"></span>
-          <h2 class="text-amber-300 text-xs font-medium tracking-widest uppercase">En Progreso</h2>
+        <div class="flex flex-col py-2 flex-1 overflow-y-auto scrollbar-hide">
+          @for (tarea of tareas().filter((t) => t.estadosTarea === 1); track tarea.idTarea) {
+            <app-tarea-card
+              [tarea]="tarea"
+              (tareaEditada)="onTareaCreada()"
+              (tareaEliminada)="onTareaCreada()"
+            />
+          }
         </div>
-        <span class="text-xs bg-amber-500/15 text-amber-400 px-2.5 py-1 rounded-full">{{
-          enProgreso()
-        }}</span>
       </div>
-      <div class="flex flex-col py-2 flex-1 overflow-y-auto scrollbar-hide">
-        @for (tarea of tareas().filter((t) => t.estadosTarea === 1); track tarea.idTarea) {
-          <app-tarea-card
-            [tarea]="tarea"
-            (tareaEditada)="onTareaCreada()"
-            (tareaEliminada)="onTareaCreada()"
-          />
-        }
-      </div>
-    </div>
 
-    <div
-      class="bg-slate-800/50 border border-amber-900/50 rounded-2xl p-4 md:p-5 backdrop-blur-sm flex flex-col overflow-hidden landscape:max-h-[calc(85vh-2rem)]"
-    >
-      <div class="flex items-center justify-between mb-4 shrink-0">
-        <div class="flex items-center gap-2">
-          <span class="size-2 rounded-full bg-amber-400 animate-pulse"></span>
-          <h2 class="text-amber-300 text-xs font-medium tracking-widest uppercase">Completado</h2>
+      <div
+        class="bg-zinc-800/50 border border-amber-900/50 rounded-2xl p-4 md:p-5 backdrop-blur-sm flex flex-col overflow-hidden landscape:max-h-[calc(100vh-2rem)]"
+      >
+        <div class="flex items-center justify-between mb-4 shrink-0">
+          <div class="flex items-center gap-2">
+            <span class="size-2 rounded-full bg-amber-400 animate-pulse"></span>
+            <h2 class="text-amber-300 text-xs font-medium tracking-widest uppercase">Completado</h2>
+          </div>
+          <span class="text-xs bg-amber-500/15 text-amber-400 px-2.5 py-1 rounded-full">{{
+            completadas()
+          }}</span>
         </div>
-        <span class="text-xs bg-amber-500/15 text-amber-400 px-2.5 py-1 rounded-full">{{
-          completadas()
-        }}</span>
-      </div>
-      <div class="flex flex-col py-2 flex-1 overflow-y-auto scrollbar-hide">
-        @for (tarea of tareas().filter((t) => t.estadosTarea === 3); track tarea.idTarea) {
-          <app-tarea-card
-            [tarea]="tarea"
-            (tareaEditada)="onTareaCreada()"
-            (tareaEliminada)="onTareaCreada()"
-          />
-        }
+        <div class="flex flex-col py-2 flex-1 overflow-y-auto scrollbar-hide">
+          @for (tarea of tareas().filter((t) => t.estadosTarea === 3); track tarea.idTarea) {
+            <app-tarea-card
+              [tarea]="tarea"
+              (tareaEditada)="onTareaCreada()"
+              (tareaEliminada)="onTareaCreada()"
+            />
+          }
+        </div>
       </div>
     </div>
   </div>

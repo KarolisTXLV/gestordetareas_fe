@@ -1,16 +1,22 @@
 <div class="min-h-screen bg-slate-900 flex items-center justify-center pb-10 mx-4 sm:mx-0">
   <div
-    class="w-full max-w-md bg-slate-800/50 border border-amber-900/50 rounded-2xl p-9 backdrop-blur-sm"
+    class="w-full max-w-md bg-zinc-900/90 border border-amber-900/50 rounded-md p-5 backdrop-blur-sm"
   >
-    <h1 class="text-xl font-semibold text-amber-200 mb-1">Mis espacios</h1>
-    <p class="text-sm text-amber-400/45 mb-6">Selecciona un espacio o crea uno nuevo</p>
-    <div class="flex flex-col gap-1 mb-4">
-      <label class="text-amber-400/60 text-sm">
+    <div class="flex items-center gap-2 mb-5">
+      <span class="size-2 rounded-full bg-amber-400 animate-pulse"></span>
+      <h1 class="text-amber-300 text-xs font-medium tracking-widest uppercase">Mis espacios</h1>
+    </div>
+    <p class="text-xs text-amber-700 uppercase tracking-wider mb-6">
+      Selecciona un espacio o crea uno nuevo
+    </p>
+
+    <div class="flex flex-col gap-1.5 mb-4">
+      <label class="text-xs font-medium text-amber-600 uppercase tracking-wider">
         Nombre <span class="text-amber-400">*</span>
       </label>
       <div class="relative flex items-center">
         <svg
-          class="absolute left-3 w-4 h-4 text-amber-400/40"
+          class="absolute left-3 w-4 h-4 text-amber-600/50"
           fill="none"
           stroke="currentColor"
           stroke-width="1.5"
@@ -26,7 +32,7 @@
           [(ngModel)]="nombreEspacioTrabajo"
           type="text"
           placeholder="Nombre del espacio de trabajo"
-          class="w-full bg-slate-600/20 border border-amber-900/50 text-amber-400 rounded-xl pl-9 pr-4 py-2.5 text-sm focus:outline-none focus:border-amber-500/50 placeholder:text-amber-600/40 transition-colors"
+          class="w-full bg-amber-900/30 border border-amber-600/50 text-amber-200 placeholder:text-amber-800 rounded-md pl-9 pr-4 py-3 text-sm focus:outline-none focus:border-amber-600/60 transition-colors"
         />
       </div>
     </div>
@@ -34,7 +40,7 @@
     <button
       [disabled]="cargando"
       (click)="onSubmit()"
-      class="w-full flex items-center justify-center gap-2 bg-amber-700/60 hover:bg-amber-700/80 active:scale-95 text-amber-100 font-medium text-sm py-2.5 rounded-xl transition-all duration-200 border border-amber-600/30 mb-6 disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none"
+      class="w-full flex items-center justify-center gap-2 bg-amber-500/15 hover:bg-amber-500/25 active:scale-95 text-amber-400 uppercase tracking-wider font-medium text-xs py-2.5 rounded-md transition-all duration-200 border border-amber-600/50 mb-6 disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none"
     >
       <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -43,20 +49,20 @@
     </button>
 
     <div class="flex items-center gap-3 mb-5">
-      <span class="flex-1 h-px bg-amber-400/10"></span>
-      <span class="text-xs text-amber-400/30">Espacios disponibles</span>
-      <span class="flex-1 h-px bg-amber-400/10"></span>
+      <span class="flex-1 h-px bg-amber-900/50"></span>
+      <span class="text-xs text-amber-700 uppercase tracking-wider">Espacios disponibles</span>
+      <span class="flex-1 h-px bg-amber-900/50"></span>
     </div>
 
-    <div class="flex flex-col gap-3 max-h-52 overflow-y-auto scrollbar-hide">
+    <div class="flex flex-col gap-2 max-h-52 overflow-y-auto scrollbar-hide">
       @for (espacio of espaciosDeTrabajo(); track espacio.idEspacioDeTrabajo) {
         <button
           (click)="seleccionarEspacio(espacio.idEspacioDeTrabajo)"
-          class="flex items-center justify-between w-full text-left bg-amber-900/30 border border-amber-400/10 hover:border-amber-400/30 hover:bg-amber-900/50 rounded-xl px-4 py-3.5 transition-all duration-200 group"
+          class="flex items-center justify-between w-full text-left bg-amber-900/30 border border-amber-600/50 hover:border-amber-600 hover:bg-amber-900/50 rounded-md px-4 py-3 transition-all duration-200 group"
         >
           <div class="flex items-center gap-3 min-w-0">
             <svg
-              class="w-4 h-4 text-amber-400/25 group-hover:text-amber-400/50 transition-all shrink-0"
+              class="w-3 h-3 text-amber-600 group-hover:text-amber-400 transition-all shrink-0"
               fill="none"
               stroke="currentColor"
               stroke-width="2"
@@ -71,7 +77,7 @@
           <button
             (click)="$event.stopPropagation(); onEliminar(espacio.idEspacioDeTrabajo)"
             [disabled]="cargando"
-            class="shrink-0 px-3 py-1.5 text-xs bg-red-500/20 hover:bg-red-500/30 text-red-400 font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            class="shrink-0 px-3 py-1.5 text-xs bg-red-500/15 hover:bg-red-500/25 text-red-400 uppercase tracking-wider font-medium rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Eliminar
           </button>

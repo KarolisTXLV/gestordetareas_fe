@@ -1,32 +1,40 @@
 <div
-  class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+  class="modal-overlay fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50"
   (click)="onOverlayClick($event)"
 >
   <div
-    class="bg-zinc-900 border border-zinc-700 rounded-xl w-full max-w-md mx-4 p-6 shadow-xl"
+    class="bg-zinc-900/90 border border-amber-900/50 rounded-md w-full max-w-md mx-4 p-6 shadow-xl"
     (click)="$event.stopPropagation()"
   >
-    <div class="flex items-center justify-between mb-5">
-      <h2 class="text-white font-semibold">Buscar amigo</h2>
-      <button (click)="cerrar.emit()" class="text-zinc-400 hover:text-white transition-colors">
+    <div class="flex items-center justify-between mb-6">
+      <div class="flex items-center gap-2">
+        <span class="size-2 rounded-full bg-amber-400 animate-pulse"></span>
+        <h2 class="text-amber-300 text-xs font-medium tracking-widest uppercase">Buscar amigo</h2>
+      </div>
+      <button
+        (click)="cerrar.emit()"
+        class="text-amber-700 hover:text-amber-400 transition-colors text-sm"
+      >
         ✕
       </button>
     </div>
 
     <div class="flex flex-col gap-4">
-      <div class="flex flex-col gap-1">
-        <label class="text-zinc-400 text-sm">FriendTag <span class="text-amber-400">*</span></label>
+      <div class="flex flex-col gap-1.5">
+        <label class="text-xs font-medium text-amber-600 uppercase tracking-wider">
+          FriendTag <span class="text-amber-400">*</span>
+        </label>
         <input
           [(ngModel)]="friendTag"
           type="text"
           placeholder="FriendTag del amigo"
-          class="bg-zinc-800 border border-zinc-700 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500 placeholder:text-zinc-500"
+          class="bg-amber-900/30 border border-amber-600/50 rounded-md px-4 py-3 text-sm text-amber-200 placeholder:text-amber-800 focus:outline-none focus:border-amber-600/60 transition-colors"
         />
       </div>
 
       @if (nombreAmigo()) {
         <div
-          class="flex items-center gap-3 bg-amber-500/10 border border-amber-500/20 rounded-lg px-4 py-3"
+          class="flex items-center gap-3 bg-amber-900/30 border border-amber-600/50 rounded-md px-4 py-3"
         >
           <div
             class="size-8 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-300 text-sm font-semibold shrink-0"
@@ -34,8 +42,8 @@
             {{ nombreAmigo()[0].toUpperCase() }}
           </div>
           <div>
-            <p class="text-white text-sm font-medium">{{ nombreAmigo() }}</p>
-            <p class="text-zinc-400 text-xs">Usuario encontrado</p>
+            <p class="text-amber-200 text-sm font-medium">{{ nombreAmigo() }}</p>
+            <p class="text-amber-600 text-xs uppercase tracking-wider">Usuario encontrado</p>
           </div>
         </div>
       }
@@ -44,10 +52,10 @@
         <p class="text-red-400 text-xs">{{ error }}</p>
       }
 
-      <div class="flex justify-end gap-2 mt-1">
+      <div class="flex justify-end items-center gap-2 mt-1">
         <button
           (click)="cerrar.emit()"
-          class="px-4 py-2 text-sm text-zinc-400 hover:text-white transition-colors"
+          class="px-4 py-2 text-xs text-amber-700 hover:text-amber-400 uppercase tracking-wider transition-colors"
         >
           Cancelar
         </button>
@@ -55,7 +63,7 @@
           <button
             (click)="onAnadirAmigo()"
             [disabled]="cargando"
-            class="px-4 py-2 text-sm bg-amber-500 hover:bg-amber-400 text-black font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            class="px-4 py-2 text-xs bg-amber-500/15 hover:bg-amber-500/25 text-amber-400 uppercase tracking-wider font-medium rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {{ cargando ? 'Añadiendo...' : 'Añadir amigo' }}
           </button>
@@ -64,7 +72,7 @@
           <button
             (click)="onSubmit()"
             [disabled]="cargando"
-            class="px-4 py-2 text-sm bg-amber-500 hover:bg-amber-400 text-black font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            class="px-4 py-2 text-xs bg-amber-500/15 hover:bg-amber-500/25 text-amber-400 uppercase tracking-wider font-medium rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {{ cargando ? 'Buscando...' : 'Buscar amigo' }}
           </button>

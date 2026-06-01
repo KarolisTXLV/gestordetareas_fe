@@ -1,33 +1,51 @@
 <div
-  class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+  class="modal-overlay fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50"
   (click)="onOverlayClick($event)"
 >
-  <div class="bg-zinc-900 border border-zinc-700 rounded-xl w-full max-w-md mx-4 p-6 shadow-xl">
-    <div class="flex items-center justify-between mb-5">
-      <h2 class="text-white font-semibold text-lg">Invitar a colaborar</h2>
-      <button (click)="cerrar.emit()" class="text-zinc-400 hover:text-white transition-colors">
+  <div
+    class="bg-zinc-900/90 border border-amber-900/50 rounded-md w-full max-w-md mx-4 p-6 shadow-xl"
+  >
+    <div class="flex items-center justify-between mb-6">
+      <div class="flex items-center gap-2">
+        <span class="size-2 rounded-full bg-amber-400 animate-pulse"></span>
+        <h2 class="text-amber-300 text-xs font-medium tracking-widest uppercase">
+          Invitar a colaborar
+        </h2>
+      </div>
+      <button
+        (click)="cerrar.emit()"
+        class="text-amber-700 hover:text-amber-400 transition-colors text-sm"
+      >
         ✕
       </button>
     </div>
 
     <div class="flex flex-col gap-4">
-      <div class="flex items-center gap-3 bg-zinc-800 rounded-lg px-4 py-3">
+      <div
+        class="flex items-center gap-3 bg-amber-900/30 border border-amber-600/50 rounded-md px-4 py-3"
+      >
         <div
-          class="size-9 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-300 text-sm font-semibold shrink-0"
+          class="size-8 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-300 text-sm font-semibold shrink-0"
         >
           {{ amigo().nombreAmigo[0].toUpperCase() }}
         </div>
-        <p class="text-white text-sm font-medium">{{ amigo().nombreAmigo }}</p>
+        <div>
+          <p class="text-amber-200 text-sm font-medium">{{ amigo().nombreAmigo }}</p>
+          <p class="text-amber-600 text-xs uppercase tracking-wider">Selecciona un espacio</p>
+        </div>
       </div>
 
-      @for (espacio of espaciosDeTrabajo(); track espacio.idEspacioDeTrabajo) {
-        <button
-          (click)="InvitarAlEspacio(espacio.idEspacioDeTrabajo, amigo().idAmigo)"
-          class="flex items-center justify-between w-full text-left bg-amber-900/30 border border-amber-400/10 hover:border-amber-400/30 hover:bg-amber-900/50 rounded-xl px-4 py-3.5 transition-all duration-200 group"
-        >
-          <div class="flex items-center gap-3 min-w-0">
+      <div class="flex flex-col gap-2">
+        @for (espacio of espaciosDeTrabajo(); track espacio.idEspacioDeTrabajo) {
+          <button
+            (click)="InvitarAlEspacio(espacio.idEspacioDeTrabajo, amigo().idAmigo)"
+            class="flex items-center justify-between w-full text-left bg-amber-900/30 border border-amber-600/50 hover:border-amber-600 hover:bg-amber-900/50 rounded-md px-4 py-3 transition-all duration-200 group"
+          >
+            <p class="text-sm font-medium text-amber-200 truncate">
+              {{ espacio.nombreEspacioTrabajo }}
+            </p>
             <svg
-              class="w-4 h-4 text-amber-400/25 group-hover:text-amber-400/50 transition-all shrink-0"
+              class="w-3 h-3 text-amber-600 group-hover:text-amber-400 transition-all shrink-0"
               fill="none"
               stroke="currentColor"
               stroke-width="2"
@@ -35,12 +53,9 @@
             >
               <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
             </svg>
-            <p class="text-sm font-medium text-amber-200 truncate">
-              {{ espacio.nombreEspacioTrabajo }}
-            </p>
-          </div>
-        </button>
-      }
+          </button>
+        }
+      </div>
     </div>
   </div>
 </div>

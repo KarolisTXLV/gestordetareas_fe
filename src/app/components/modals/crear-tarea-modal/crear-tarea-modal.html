@@ -1,87 +1,108 @@
 <div
-  class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+  class="modal-overlay fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50"
   (click)="onOverlayClick($event)"
 >
-  <div class="bg-zinc-900 border border-zinc-700 rounded-xl w-full max-w-md mx-4 p-6 shadow-xl">
-    <div class="flex items-center justify-between mb-5">
-      <h2 class="text-white font-semibold text-lg">Nueva tarea</h2>
+  <div
+    class="bg-zinc-900/90 border border-amber-900/50 rounded-md w-full max-w-md mx-4 p-6 shadow-xl"
+  >
+    <div class="flex items-center justify-between mb-6">
+      <div class="flex items-center gap-2">
+        <span class="size-2 rounded-full bg-amber-400 animate-pulse"></span>
+        <h2 class="text-amber-300 text-xs font-medium tracking-widest uppercase">Nueva tarea</h2>
+      </div>
 
-      <label class="flex items-center cursor-pointer">
-        <span class="text-zinc-400 text-sm">Con prioridad?</span>
-        <div
-          (click)="conPrioridad.set(!conPrioridad())"
-          class="relative w-10 h-6 rounded-full transition-colors duration-200"
-          [class.bg-red-500]="conPrioridad()"
-          [class.bg-zinc-600]="!conPrioridad()"
-        >
+      <div class="flex items-center gap-4">
+        <label class="flex items-center gap-2 cursor-pointer">
+          <span class="text-amber-600 text-xs tracking-wider uppercase">Prioridad</span>
           <div
-            class="absolute top-1 size-4 rounded-full bg-white transition-transform duration-200"
-            [class.translate-x-5]="conPrioridad()"
-            [class.translate-x-1]="!conPrioridad()"
-          ></div>
-        </div>
-      </label>
-      <button (click)="cerrar.emit()" class="text-zinc-400 hover:text-white transition-colors">
-        ✕
-      </button>
+            (click)="conPrioridad.set(!conPrioridad())"
+            class="relative w-10 h-6 rounded-full transition-colors duration-200"
+            [class.bg-amber-500]="conPrioridad()"
+            [class.bg-slate-700]="!conPrioridad()"
+          >
+            <div
+              class="absolute top-1 size-4 rounded-full bg-white transition-transform duration-200"
+              [class.translate-x-5]="conPrioridad()"
+              [class.translate-x-1]="!conPrioridad()"
+            ></div>
+          </div>
+        </label>
+        <button
+          (click)="cerrar.emit()"
+          class="text-amber-700 hover:text-amber-400 transition-colors text-sm"
+        >
+          ✕
+        </button>
+      </div>
     </div>
+
     <div class="flex flex-col gap-4">
-      <div class="flex flex-col gap-1">
-        <label class="text-zinc-400 text-sm">Nombre <span class="text-amber-400">*</span></label>
+      <div class="flex flex-col gap-1.5">
+        <label class="text-xs font-medium text-amber-600 uppercase tracking-wider">
+          Nombre <span class="text-amber-400">*</span>
+        </label>
         <input
           [(ngModel)]="nombreTarea"
           minlength="3"
           type="text"
           placeholder="Nombre de la tarea"
-          class="bg-zinc-800 border border-zinc-700 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500 placeholder:text-zinc-500"
+          class="bg-amber-900/30 border border-amber-600/50 rounded-md px-4 py-3 text-sm text-amber-200 placeholder:text-amber-800 focus:outline-none focus:border-amber-600/60 transition-colors"
         />
       </div>
 
-      <div class="flex flex-col gap-1">
-        <label class="text-zinc-400 text-sm">Descripción <span class="text-amber-400">*</span></label>
+      <div class="flex flex-col gap-1.5">
+        <label class="text-xs font-medium text-amber-600 uppercase tracking-wider">
+          Descripción <span class="text-amber-400">*</span>
+        </label>
         <textarea
           [(ngModel)]="descripcionTarea"
           minlength="3"
           placeholder="Descripción"
           rows="3"
-          class="bg-zinc-800 border border-zinc-700 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500 placeholder:text-zinc-500 resize-none"
+          class="bg-amber-900/30 border border-amber-600/50 rounded-md px-4 py-3 text-sm text-amber-200 placeholder:text-amber-800 focus:outline-none focus:border-amber-600/60 transition-colors"
         ></textarea>
       </div>
+
       @if (conPrioridad()) {
-        <input
-          type="date"
-          [(ngModel)]="fechaLimite"
-          class="bg-zinc-800 border border-zinc-700 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500"
-        />
+        <div class="flex flex-col gap-1.5">
+          <label class="text-xs font-medium text-amber-600 uppercase tracking-wider">
+            Fecha límite <span class="text-amber-400">*</span>
+          </label>
+          <input
+            type="date"
+            [(ngModel)]="fechaLimite"
+            class="bg-amber-900/30 border border-amber-600/50 rounded-md px-4 py-3 text-sm text-amber-200 placeholder:text-amber-800 focus:outline-none focus:border-amber-600/60 transition-colors"
+          />
+        </div>
       }
 
-      <p if="error" class="text-red-400 text-xs">{{ error }}</p>
+      @if (error) {
+        <p class="text-red-400 text-xs">{{ error }}</p>
+      }
 
-      <div class="flex justify-end gap-2 mt-1">
+      <div class="flex justify-end items-center gap-2 mt-1">
         <button
           (click)="cerrar.emit()"
-          class="px-4 py-2 text-sm text-zinc-400 hover:text-white transition-colors"
+          class="px-4 py-2 text-xs text-amber-700 hover:text-amber-400 uppercase tracking-wider transition-colors"
         >
           Cancelar
         </button>
         @if (!conPrioridad()) {
           <button
-            hide
             (click)="onSubmit()"
             [disabled]="cargando"
-            class="px-4 py-2 text-sm bg-amber-500 hover:bg-amber-400 text-black font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            class="px-4 py-2 text-xs bg-amber-500/15 hover:bg-amber-500/25 text-amber-400 uppercase tracking-wider font-medium rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {{ cargando ? 'Creando...' : 'Crear tarea' }}
           </button>
         }
         @if (conPrioridad()) {
           <button
-            hide
             (click)="CrearTareaUrgente()"
             [disabled]="cargando"
-            class="px-4 py-2 text-sm bg-amber-500 hover:bg-amber-400 text-black font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            class="px-4 py-2 text-xs bg-amber-500/15 hover:bg-amber-500/25 text-amber-400 uppercase tracking-wider font-medium rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {{ cargando ? 'Creando...' : 'Crear tarea' }}
+            {{ cargando ? 'Creando...' : 'Crear tarea urgente' }}
           </button>
         }
       </div>
