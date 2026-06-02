@@ -48,31 +48,37 @@
 </div>
 @if (modalPriorizarAbierto()) {
   <div
-    class="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+    class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50"
     (click)="modalPriorizarAbierto.set(false)"
   >
     <div
-      class="bg-zinc-900 border border-zinc-700 rounded-md w-full max-w-sm mx-4 p-6 shadow-xl relative z-10"
+      class="bg-zinc-900/90 border border-amber-900/50 rounded-md w-full max-w-sm mx-4 p-6 shadow-xl relative z-10"
       (click)="$event.stopPropagation()"
     >
-      <div class="flex items-center justify-between mb-4">
-        <h2 class="text-white font-semibold">Priorizar tarea</h2>
-        <button (click)="modalPriorizarAbierto.set(false)" class="text-zinc-400 hover:text-white">
+      <div class="flex items-center justify-between mb-6">
+        <div class="flex items-center gap-2">
+          <span class="size-2 rounded-full bg-amber-400 animate-pulse"></span>
+          <h2 class="text-amber-300 text-xs font-medium tracking-widest uppercase">
+            Priorizar tarea
+          </h2>
+        </div>
+        <button
+          (click)="modalPriorizarAbierto.set(false)"
+          class="text-amber-700 hover:text-amber-400 transition-colors text-sm"
+        >
           ✕
         </button>
       </div>
 
-      <p class="text-zinc-400 text-sm mb-4">{{ tarea().nombreTarea }}</p>
-
-      <div class="flex flex-col gap-1 mb-4">
-        <label class="text-zinc-400 text-sm"
-          >Fecha límite <span class="text-red-400">*</span></label
-        >
+      <div class="flex flex-col gap-1.5 mb-4">
+        <label class="text-xs font-medium text-amber-600 uppercase tracking-wider">
+          Fecha límite <span class="text-amber-400">*</span>
+        </label>
         <input
           type="date"
           [ngModel]="fechaLimite()"
           (ngModelChange)="fechaLimite.set($event)"
-          class="bg-zinc-800 border border-zinc-700 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-red-500"
+          class="bg-amber-900/30 border border-amber-600/50 rounded-md px-4 py-3 text-sm text-amber-200 focus:outline-none focus:border-amber-600/60 transition-colors"
         />
       </div>
 
@@ -80,17 +86,17 @@
         <p class="text-red-400 text-xs mb-3">{{ error() }}</p>
       }
 
-      <div class="flex justify-end gap-2">
+      <div class="flex justify-end items-center gap-2">
         <button
           (click)="modalPriorizarAbierto.set(false)"
-          class="px-4 py-2 text-sm text-zinc-400 hover:text-white transition-colors"
+          class="px-4 py-2 text-xs text-amber-700 hover:text-amber-400 uppercase tracking-wider transition-colors"
         >
           Cancelar
         </button>
         <button
           (click)="priorizarTarea()"
           [disabled]="cargando"
-          class="px-4 py-2 text-sm bg-red-500/20 hover:bg-red-500/30 text-red-300 border border-red-500/30 font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none"
+          class="px-4 py-2 text-xs bg-amber-500/15 hover:bg-amber-500/25 text-amber-400 uppercase tracking-wider font-medium rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none"
         >
           {{ cargando ? 'Confirmando...' : '⚑ Confirmar prioridad' }}
         </button>
