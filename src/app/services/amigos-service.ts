@@ -15,9 +15,7 @@ export class AmigosService {
       `${this.baseUrl}/Usuarios/EncontrarAmigoPorFriendTag/${friendTag}`,
     );
   }
-  ListarTodosLosAmigos(){
-        return this.http.get<ListarAmigos[]>(
-      `${this.baseUrl}/Usuarios/ListarTodosLosAmigos`,
-    );
+  ListarTodosLosAmigos() {
+    return this.http.get<ListarAmigos[]>(`${this.baseUrl}/Usuarios/ListarTodosLosAmigos`);
   }
 }
