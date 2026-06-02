@@ -4,7 +4,6 @@ import { tap } from 'rxjs/operators';
 
 interface LoginResponse {
   token: string;
-  expira: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -30,7 +29,6 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('token');
-    localStorage.removeItem('expira');
     this._token.set(null);
   }
 
