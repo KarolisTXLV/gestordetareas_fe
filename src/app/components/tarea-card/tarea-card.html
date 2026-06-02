@@ -6,7 +6,7 @@
       @if (!tarea().tienePrioridad) {
         <button
           (click)="modalPriorizarAbierto.set(true)"
-          class="bg-red-500/20 text-red-300 border border-red-500/30 rounded-md px-2 sm:px-3 py-1 text-xs font-medium"
+          class="bg-red-500/20 text-red-300 border border-red-500/30 rounded-md px-2 sm:px-3 py-1 text-xs font-medium hover:bg-red-600/20"
         >
           <span class="hidden lg:inline">⚑</span> Priorizar
         </button>
@@ -24,7 +24,7 @@
     </div>
     <button
       (click)="modalEditarAbierto.set(true)"
-      class="bg-orange-400/20 text-orange-300 border border-orange-400/30 rounded-md px-2 sm:px-3 py-1 text-xs font-medium"
+      class="bg-orange-400/20 text-orange-300 border border-orange-400/30 rounded-md px-2 sm:px-3 py-1 text-xs font-medium hover:bg-orange-500/20"
     >
       Editar
     </button>
