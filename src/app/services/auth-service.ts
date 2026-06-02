@@ -9,12 +9,12 @@ interface LoginResponse {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private http    = inject(HttpClient);
+  private http = inject(HttpClient);
   private baseUrl = 'https://gestordetareasapi.dekarolis.com/api';
 
   private _token = signal<string | null>(this.cargarToken());
 
-  readonly token          = this._token.asReadonly();
+  readonly token = this._token.asReadonly();
   readonly estaAutenticado = computed(() => this._token() !== null);
 
   login(correo: string, contrasena: string) {
@@ -22,10 +22,9 @@ export class AuthService {
       .post<LoginResponse>(`${this.baseUrl}/Autorizacion/IniciarSesion`, { correo, contrasena })
       .pipe(
         tap((respuesta) => {
-          localStorage.setItem('token',  respuesta.token);
-          localStorage.setItem('expira', respuesta.expira);
+          localStorage.setItem('token', respuesta.token);
           this._token.set(respuesta.token);
-        })
+        }),
       );
   }
 
@@ -36,15 +35,16 @@ export class AuthService {
   }
 
   private cargarToken(): string | null {
-    const token  = localStorage.getItem('token');
-    const expira = localStorage.getItem('expira');
+    const token = localStorage.getItem('token');
 
-    if (!token || !expira) return null;
+    if (!token) return null;
 
-    const haExpirado = new Date(expira) < new Date();
-    if (haExpirado) {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+
+    const exp = payload.exp * 1000;
+
+    if (Date.now() > exp) {
       localStorage.removeItem('token');
-      localStorage.removeItem('expira');
       return null;
     }
 
